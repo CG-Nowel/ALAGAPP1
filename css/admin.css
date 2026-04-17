@@ -1,0 +1,10 @@
+/* ============================================
+   AlagApp Clinic - Admin Dashboard Styles
+   Styles specific to admin-dashboard.php
+   ============================================ */
+
+/* Admin Sidebar (non-responsive fixed layout) */
+.sidebar {
+    background: linear-gradient(180deg, #FF6B9A 0%, #FFBCD9 100%);
+    min-height: 100vh;
+}

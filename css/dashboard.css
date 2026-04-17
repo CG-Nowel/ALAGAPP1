@@ -1,0 +1,472 @@
+/* ============================================
+   AlagApp Clinic - Dashboard Styles
+   Shared styles for parent and doctor dashboards
+   ============================================ */
+
+/* Sidebar */
+.sidebar {
+    background: linear-gradient(180deg, #ff7aa3 0%, #FFBCD9 100%);
+    min-height: 100vh;
+    transition: transform 0.3s ease;
+    z-index: 40;
+}
+
+/* Mobile Sidebar */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        transform: translateX(-100%);
+        width: 280px;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+}
+
+@media (min-width: 769px) {
+    .sidebar {
+        position: fixed;
+        width: 16rem;
+        transform: translateX(0);
+    }
+
+    .mobile-menu-btn {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 16rem;
+        width: calc(100% - 16rem);
+    }
+}
+
+/* Responsive Table */
+.table-container {
+    overflow-x: auto;
+}
+
+/* Form Grid */
+.form-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Children Grid */
+.children-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .children-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .children-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Content Grid */
+.content-grid {
+    display: grid;
+    gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+    .content-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Modal Responsive */
+.modal-content {
+    width: 95%;
+    margin: 1rem auto;
+}
+
+@media (min-width: 640px) {
+    .modal-content {
+        width: 90%;
+        max-width: 42rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .modal-content {
+        max-width: 56rem;
+    }
+}
+
+/* Navigation Icons */
+.nav-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* Responsive Text */
+.responsive-text {
+    font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+    .responsive-text {
+        font-size: 1rem;
+    }
+}
+
+/* Responsive Buttons */
+.btn-responsive {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+    .btn-responsive {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* Medical Records Tabs */
+.medical-records-tab.active {
+    border-color: var(--primary-pink-dashboard, #ff7aa3);
+    color: var(--primary-pink-dashboard, #ff7aa3);
+}
+
+/* Medical Record Cards */
+.medical-record-card {
+    transition: all 0.3s ease;
+}
+
+.medical-record-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Calendar Styles */
+.calendar-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    padding: 1rem;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
+}
+
+.calendar-month-year {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark-text, #333333);
+}
+
+.calendar-nav-btn {
+    background: none;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 0.4rem;
+    cursor: pointer;
+    color: #6b7280;
+    transition: all 0.2s ease;
+}
+
+.calendar-nav-btn:hover {
+    background: #f3f4f6;
+    color: var(--primary-pink-dashboard, #ff7aa3);
+    border-color: var(--primary-pink-dashboard, #ff7aa3);
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #9ca3af;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    position: relative;
+    color: #374151;
+    cursor: default;
+}
+
+.calendar-day.clickable {
+    cursor: pointer;
+}
+
+.calendar-day.clickable:hover {
+    background: #fce7f3;
+    color: var(--primary-pink-dashboard, #ff7aa3);
+}
+
+.calendar-day.today {
+    background: #fce7f3;
+    font-weight: 700;
+    color: var(--primary-pink-dashboard, #ff7aa3);
+}
+
+.calendar-day.selected {
+    background: var(--primary-pink-dashboard, #ff7aa3);
+    color: white;
+    font-weight: 700;
+}
+
+.calendar-day.past-date {
+    color: #d1d5db;
+}
+
+.calendar-day.prev-month,
+.calendar-day.next-month {
+    color: #e5e7eb;
+}
+
+.calendar-day.unavailable-date {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.calendar-day.non-working-day {
+    background: #f3f4f6;
+    color: #9ca3af;
+}
+
+.calendar-day.has-appointments::after {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--primary-pink-dashboard, #ff7aa3);
+    position: absolute;
+    bottom: 4px;
+}
+
+.appointment-indicator {
+    font-size: 0.6rem;
+    background: var(--primary-pink-dashboard, #ff7aa3);
+    color: white;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+
+.unavailable-badge {
+    font-size: 0.6rem;
+    color: #991b1b;
+    font-weight: 700;
+}
+
+.calendar-tooltip {
+    position: fixed;
+    background: #1f2937;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    transform: translateX(-50%);
+    z-index: 100;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* Appointment List */
+.appointment-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.appointment-list-item:hover {
+    background: #f9fafb;
+}
+
+/* Doctor Dashboard Modal Container */
+.modal-container {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-container.hidden {
+    display: none;
+}
+
+/* Data Table */
+.data-table {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.data-table::-webkit-scrollbar {
+    width: 6px;
+}
+
+.data-table::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.data-table::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.data-table::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* Loading Spinner for doctor dashboard */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 107, 154, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--primary-pink-dashboard, #ff7aa3);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ============================================
+   Additional Responsive Styles
+   ============================================ */
+
+/* Calendar responsive */
+@media (max-width: 480px) {
+    .calendar-container {
+        padding: 0.5rem;
+    }
+
+    .calendar-day {
+        font-size: 0.7rem;
+        border-radius: 4px;
+    }
+
+    .calendar-weekdays {
+        font-size: 0.6rem;
+    }
+
+    .calendar-month-year {
+        font-size: 0.95rem;
+    }
+
+    .appointment-indicator {
+        width: 12px;
+        height: 12px;
+        font-size: 0.5rem;
+        top: 1px;
+        right: 1px;
+    }
+
+    .unavailable-badge {
+        font-size: 0.5rem;
+    }
+}
+
+/* Responsive sections padding */
+@media (max-width: 640px) {
+    .section-content {
+        padding: 1rem !important;
+    }
+
+    .section-content h1 {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* Admin dashboard responsive overrides */
+@media (max-width: 768px) {
+    .flex.min-h-screen > .flex-1 {
+        width: 100%;
+    }
+
+    /* Make tables scroll horizontally */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+/* Line clamp utility */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

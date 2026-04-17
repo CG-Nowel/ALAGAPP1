@@ -1,0 +1,427 @@
+/* ============================================
+   AlagApp Clinic - Landing Page Styles
+   Styles specific to index.php
+   ============================================ */
+
+/* Hero Section */
+.hero-bg {
+    background: linear-gradient(rgba(255, 107, 154, 0.1), rgba(255, 188, 217, 0.1)),
+                url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1953&q=80') center/cover;
+    min-height: 100vh;
+}
+
+/* Landing page uses slightly different card-hover */
+.hero-bg ~ section .card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(255, 107, 154, 0.15);
+}
+
+/* Floating Particles */
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--light-pink);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+/* Typewriter Effect */
+.typewriter {
+    overflow: hidden;
+    border-right: 3px solid var(--primary-pink);
+    white-space: nowrap;
+    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--primary-pink); }
+}
+
+/* CAPTCHA Container */
+.captcha-container {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+/* Service Icon */
+.service-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-pink), var(--light-pink));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    transition: all 0.3s ease;
+}
+
+.service-icon:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.service-icon svg {
+    width: 40px;
+    height: 40px;
+    fill: white;
+}
+
+/* Services Carousel */
+#services-carousel .splide__slide {
+    padding: 0.5rem;
+}
+
+#services-carousel .splide__arrow {
+    position: static;
+    transform: none;
+    opacity: 1;
+    background: var(--primary-pink);
+}
+
+#services-carousel .splide__arrow:disabled {
+    opacity: 0.5;
+}
+
+#services-carousel .splide__arrow svg {
+    fill: none;
+}
+
+#services-carousel .splide__progress {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* Announcement Card */
+.announcement-card {
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--primary-pink);
+    background: linear-gradient(to bottom right, white, #fdf2f8);
+}
+
+.announcement-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(255, 107, 154, 0.15);
+    background: linear-gradient(to bottom right, white, #fce7f3);
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Category Badge */
+.category-badge {
+    background: var(--light-pink);
+    color: var(--primary-pink);
+    border: 1px solid rgba(255, 107, 154, 0.3);
+}
+
+/* Announcements Carousel */
+#announcements-carousel .splide__slide {
+    padding: 0.5rem;
+}
+
+#announcements-carousel .splide__arrow {
+    position: static;
+    transform: none;
+    opacity: 1;
+    background: linear-gradient(135deg, var(--primary-pink), #ff8fab);
+    box-shadow: 0 4px 15px rgba(255, 107, 154, 0.3);
+}
+
+#announcements-carousel .splide__arrow:hover {
+    background: linear-gradient(135deg, #ff5a8c, #ff7aa3);
+    transform: scale(1.1);
+}
+
+#announcements-carousel .splide__arrow:disabled {
+    opacity: 0.5;
+}
+
+#announcements-carousel .splide__arrow svg {
+    fill: none;
+}
+
+#announcements-carousel .splide__progress {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+#announcements-carousel .splide__progress__bar {
+    background: #fce7f3;
+}
+
+#announcements-carousel .splide__progress__bar__fill {
+    background: linear-gradient(90deg, var(--primary-pink), #ff8fab);
+}
+
+/* Modal Header Pink */
+.modal-header-pink {
+    background: linear-gradient(135deg, var(--primary-pink), #ff8fab);
+}
+
+/* Password Strength */
+@keyframes pulse-once {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.animate-pulse-once {
+    animation: pulse-once 0.3s ease-in-out;
+}
+
+.requirement-met {
+    background-color: rgba(34, 197, 94, 0.1);
+    padding: 2px 4px;
+    border-radius: 4px;
+    margin: 1px 0;
+}
+
+.requirement-not-met {
+    padding: 2px 4px;
+    border-radius: 4px;
+    margin: 1px 0;
+}
+
+/* Register Modal Scrollbar */
+#registerModal > div::-webkit-scrollbar {
+    width: 6px;
+}
+
+#registerModal > div::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+#registerModal > div::-webkit-scrollbar-thumb {
+    background: var(--primary-pink);
+    border-radius: 4px;
+}
+
+/* Password Strength Bar */
+#passwordStrengthBar {
+    transition: width 0.5s ease-in-out, background-color 0.5s ease;
+}
+
+#passwordRequirements div {
+    transition: all 0.3s ease;
+}
+
+/* ============================================
+   Mobile Responsive Styles
+   ============================================ */
+
+/* Small screens (phones) */
+@media (max-width: 640px) {
+    /* Hero section */
+    .hero-bg {
+        min-height: 80vh;
+    }
+
+    .hero-bg h1 {
+        font-size: 1.75rem !important;
+        line-height: 1.2;
+    }
+
+    .hero-bg p {
+        font-size: 1rem !important;
+        padding: 0 0.5rem;
+    }
+
+    /* Fix typewriter overflow */
+    .typewriter {
+        white-space: normal;
+        border-right: none;
+        animation: none;
+        display: block;
+    }
+
+    /* Section headings */
+    section h2 {
+        font-size: 1.75rem !important;
+    }
+
+    section > div > div > p.text-xl {
+        font-size: 1rem !important;
+    }
+
+    /* Service cards */
+    .service-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .service-icon svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    /* Announcement cards */
+    .announcement-card {
+        padding: 1rem !important;
+    }
+
+    /* Doctors grid */
+    .card-hover {
+        margin-bottom: 0;
+    }
+
+    /* About section */
+    #about .flex.items-start.space-x-4 {
+        gap: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+        padding: 2rem 0 !important;
+    }
+
+    footer h3 {
+        font-size: 1.25rem !important;
+    }
+
+    footer .flex.justify-center.space-x-6 {
+        gap: 1rem;
+    }
+
+    /* Login Modal */
+    #loginModal > div {
+        margin: 0.5rem;
+        max-height: calc(100vh - 2rem);
+        overflow-y: auto;
+    }
+
+    #loginModal .p-8 {
+        padding: 1.5rem;
+    }
+
+    #loginModal h2 {
+        font-size: 1.5rem;
+    }
+
+    /* Register Modal */
+    #registerModal {
+        padding: 0.5rem;
+        align-items: flex-start;
+        padding-top: 1rem;
+    }
+
+    #registerModal > div {
+        max-height: calc(100vh - 1rem);
+        margin-top: 1rem;
+        border-radius: 0.75rem;
+    }
+
+    .modal-header-pink {
+        padding: 1rem;
+    }
+
+    .modal-header-pink h2 {
+        font-size: 1.25rem;
+    }
+
+    .modal-header-pink p {
+        font-size: 0.875rem;
+    }
+
+    #registerModal .p-8 {
+        padding: 1rem;
+    }
+
+    /* Buttons */
+    .btn-primary {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+
+    /* Splide carousel arrows */
+    .splide__arrows {
+        gap: 0.5rem;
+    }
+
+    .splide__arrow {
+        padding: 0.5rem !important;
+    }
+
+    /* Nav */
+    nav h1 {
+        font-size: 1.25rem !important;
+    }
+
+    /* Announcement modal */
+    #announcementModal > div {
+        margin: 0.5rem;
+        max-height: calc(100vh - 1rem);
+    }
+
+    #announcementModal .p-8 {
+        padding: 1rem;
+    }
+
+    #announcementModal h2 {
+        font-size: 1.25rem !important;
+    }
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 768px) {
+    .hero-bg h1 {
+        font-size: 2.25rem !important;
+    }
+
+    .typewriter {
+        white-space: normal;
+        border-right: none;
+        animation: none;
+        display: block;
+    }
+
+    section h2 {
+        font-size: 2rem !important;
+    }
+
+    /* Ensure grid cols collapse on tablets */
+    .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Prevent horizontal overflow globally */
+html, body {
+    overflow-x: hidden;
+}
+
+/* Ensure images don't overflow */
+img {
+    max-width: 100%;
+    height: auto;
+}

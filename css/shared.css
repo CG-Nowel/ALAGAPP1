@@ -1,0 +1,142 @@
+/* ============================================
+   AlagApp Clinic - Shared Styles
+   Common styles used across all pages
+   ============================================ */
+
+/* CSS Custom Properties (Design Tokens) */
+:root {
+    --primary-pink: #d03664;
+    --primary-pink-dashboard: #FF6B9A;
+    --light-pink: #FFBCD9;
+    --dark-text: #333333;
+    --light-gray: #f8f0f4;
+    --light-gray-dashboard: #F6F6F8;
+}
+
+/* Base Typography */
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background: linear-gradient(135deg, #ffffff 0%, #fef5f8 100%);
+    margin: 0;
+    padding: 0;
+}
+
+.font-inter {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Theme Color Utilities */
+.text-primary { color: var(--primary-pink); }
+.bg-primary { background-color: var(--primary-pink); }
+.bg-light-pink { background-color: var(--light-pink); }
+
+/* Card Hover Effect */
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(255, 107, 154, 0.15);
+}
+
+/* Primary Button */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-pink), var(--light-pink));
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255, 107, 154, 0.3);
+}
+
+/* Modal Backdrop */
+.modal-backdrop {
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.4);
+}
+
+/* Form Input Transitions */
+input, select, textarea {
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(208, 54, 100, 0.1);
+}
+
+/* Prevent zoom on iOS */
+@media (max-width: 640px) {
+    input, select, textarea {
+        font-size: 16px !important;
+    }
+}
+
+/* Section Transitions */
+.section-content {
+    transition: opacity 0.3s ease;
+}
+
+.section-content.hidden {
+    display: none;
+}
+
+/* Spinner Animation */
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--primary-pink);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    color: white;
+    z-index: 1000;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success { background: #10B981; }
+.notification.error { background: #EF4444; }
+.notification.info { background: #3B82F6; }
+
+/* Status Badges */
+.status-active { background: #d1fae5; color: #065f46; }
+.status-inactive { background: #fee2e2; color: #991b1b; }
+.status-scheduled { background: #dbeafe; color: #1e40af; }
+.status-completed { background: #d1fae5; color: #065f46; }
+.status-cancelled { background: #f3e8ff; color: #7c3aed; }
+
+/* Role Badges */
+.role-parent { background: #dbeafe; color: #1e40af; }
+.role-doctor { background: #d1fae5; color: #065f46; }
+.role-admin { background: #f3e8ff; color: #7c3aed; }
+
+/* Validation State Colors */
+.border-green-500 { border-color: #10B981 !important; }
+.border-yellow-500 { border-color: #F59E0B !important; }
+.border-red-500 { border-color: #EF4444 !important; }
+
+.ring-green-200 { --tw-ring-color: rgba(187, 247, 208, 0.5); }
+.ring-yellow-200 { --tw-ring-color: rgba(253, 230, 138, 0.5); }
+.ring-red-200 { --tw-ring-color: rgba(254, 202, 202, 0.5); }
