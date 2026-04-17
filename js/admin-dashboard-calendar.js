@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     window.viewAppointment = function(id) {
-        alert('Appointment ID: ' + id + '\n\nFull details view coming soon!');
+        (window.showToast || window.alert)('Appointment ID: ' + id + ' - Full details view coming soon!', 'info');
     };
 
     window.escapeHtml = function(text) {

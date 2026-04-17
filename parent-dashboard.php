@@ -357,29 +357,73 @@ function handleUploadPatientFile($conn, $u_id) {
 // Functions (using safe escaping; prepared statements used where straightforward)
 
 function handleAddChild($conn, $parent_id) {
-    $first_name = mysqli_real_escape_string($conn, trim($_POST['child_first_name'] ?? ''));
-    $last_name = mysqli_real_escape_string($conn, trim($_POST['child_last_name'] ?? ''));
-    $date_of_birth = mysqli_real_escape_string($conn, trim($_POST['child_dob'] ?? ''));
-    $gender = mysqli_real_escape_string($conn, trim($_POST['child_gender'] ?? ''));
-    $blood_type = mysqli_real_escape_string($conn, trim($_POST['child_blood_type'] ?? ''));
-    $height = isset($_POST['child_height']) && $_POST['child_height'] !== '' ? mysqli_real_escape_string($conn, trim($_POST['child_height'])) : null;
-    $weight = isset($_POST['child_weight']) && $_POST['child_weight'] !== '' ? mysqli_real_escape_string($conn, trim($_POST['child_weight'])) : null;
-    $allergies = mysqli_real_escape_string($conn, trim($_POST['child_allergies'] ?? ''));
-    $medical_conditions = mysqli_real_escape_string($conn, trim($_POST['child_medical_conditions'] ?? ''));
+    $first_name = trim($_POST['child_first_name'] ?? '');
+    $last_name = trim($_POST['child_last_name'] ?? '');
+    $date_of_birth = trim($_POST['child_dob'] ?? '');
+    $gender = trim($_POST['child_gender'] ?? '');
+    $blood_type = trim($_POST['child_blood_type'] ?? '');
+    $height_raw = isset($_POST['child_height']) ? trim($_POST['child_height']) : '';
+    $weight_raw = isset($_POST['child_weight']) ? trim($_POST['child_weight']) : '';
+    $allergies = trim($_POST['child_allergies'] ?? '');
+    $medical_conditions = trim($_POST['child_medical_conditions'] ?? '');
 
-    // Build query with proper NULL handling for height/weight
-    $height_sql = $height !== null ? "'" . $height . "'" : "NULL";
-    $weight_sql = $weight !== null ? "'" . $weight . "'" : "NULL";
+    // Required field validation
+    if ($first_name === '' || $last_name === '' || $date_of_birth === '' || $gender === '') {
+        $_SESSION['error_message'] = 'First name, last name, date of birth and gender are required.';
+        return false;
+    }
+    // Date of birth must not be in the future
+    if (strtotime($date_of_birth) === false || strtotime($date_of_birth) > time()) {
+        $_SESSION['error_message'] = 'Please enter a valid date of birth.';
+        return false;
+    }
+    // Strict numeric validation for height/weight (reject strings)
+    $height = null;
+    if ($height_raw !== '') {
+        if (!is_numeric($height_raw)) {
+            $_SESSION['error_message'] = 'Height must be a number.';
+            return false;
+        }
+        $height = (float)$height_raw;
+        if ($height < 10 || $height > 250) {
+            $_SESSION['error_message'] = 'Height must be between 10 and 250 cm.';
+            return false;
+        }
+    }
+    $weight = null;
+    if ($weight_raw !== '') {
+        if (!is_numeric($weight_raw)) {
+            $_SESSION['error_message'] = 'Weight must be a number.';
+            return false;
+        }
+        $weight = (float)$weight_raw;
+        if ($weight < 0.5 || $weight > 300) {
+            $_SESSION['error_message'] = 'Weight must be between 0.5 and 300 kg.';
+            return false;
+        }
+    }
 
-    $query = "INSERT INTO patients (parent_id, first_name, last_name, date_of_birth, gender, blood_type, height, weight, allergies, medical_conditions) 
-              VALUES ('" . intval($parent_id) . "', '$first_name', '$last_name', '$date_of_birth', '$gender', '$blood_type', $height_sql, $weight_sql, '$allergies', '$medical_conditions')";
-
-    if (mysqli_query($conn, $query)) {
-        return true;
-    } else {
+    $stmt = mysqli_prepare(
+        $conn,
+        "INSERT INTO patients (parent_id, first_name, last_name, date_of_birth, gender, blood_type, height, weight, allergies, medical_conditions)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    );
+    if (!$stmt) {
         $_SESSION['error_message'] = 'Error adding child: ' . mysqli_error($conn);
         return false;
     }
+    $pid = intval($parent_id);
+    mysqli_stmt_bind_param(
+        $stmt, "isssssddss",
+        $pid, $first_name, $last_name, $date_of_birth, $gender, $blood_type,
+        $height, $weight, $allergies, $medical_conditions
+    );
+
+    if (mysqli_stmt_execute($stmt)) {
+        return true;
+    }
+    $_SESSION['error_message'] = 'Error adding child: ' . mysqli_stmt_error($stmt);
+    return false;
 }
 
 
@@ -387,10 +431,31 @@ function handleAddChild($conn, $parent_id) {
 function handleBookAppointment($conn, $user_id) {
     $patient_id = intval($_POST['appointment_child'] ?? 0);
     $doctor_id = intval($_POST['appointment_doctor'] ?? 0);
-    $appointment_date = mysqli_real_escape_string($conn, trim($_POST['appointment_date'] ?? ''));
-    $appointment_time = mysqli_real_escape_string($conn, trim($_POST['appointment_time'] ?? ''));
-    $appointment_type = mysqli_real_escape_string($conn, trim($_POST['appointment_service'] ?? 'CONSULTATION'));
-    $reason = mysqli_real_escape_string($conn, trim($_POST['appointment_notes'] ?? ''));
+    $appointment_date = trim($_POST['appointment_date'] ?? '');
+    $appointment_time = trim($_POST['appointment_time'] ?? '');
+    $appointment_type = trim($_POST['appointment_service'] ?? 'CONSULTATION');
+    $reason = trim($_POST['appointment_notes'] ?? '');
+
+    // Required field validation
+    if ($patient_id <= 0 || $doctor_id <= 0 || $appointment_date === '' || $appointment_time === '' || $appointment_type === '') {
+        $_SESSION['error_message'] = 'Please fill in all required booking fields (child, doctor, date, time, service).';
+        return false;
+    }
+    // Date validity & not in the past
+    $date_ts = strtotime($appointment_date);
+    if ($date_ts === false) {
+        $_SESSION['error_message'] = 'Invalid appointment date.';
+        return false;
+    }
+    if ($date_ts < strtotime(date('Y-m-d'))) {
+        $_SESSION['error_message'] = 'Appointment date cannot be in the past.';
+        return false;
+    }
+    // Time validity HH:MM or HH:MM:SS
+    if (!preg_match('/^([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$/', $appointment_time)) {
+        $_SESSION['error_message'] = 'Invalid appointment time format.';
+        return false;
+    }
 
     // Verify child belongs to parent
     $check_query = "SELECT id FROM patients WHERE id = ? AND parent_id = ?";
@@ -414,10 +479,11 @@ function handleBookAppointment($conn, $user_id) {
         return false;
     }
 
-    $query = "INSERT INTO appointments (patient_id, doctor_id, appointment_date, appointment_time, type, reason, status) 
+    $query = "INSERT INTO appointments (patient_id, doctor_id, appointment_date, appointment_time, type, reason, status)
               VALUES (?, ?, ?, ?, ?, ?, 'SCHEDULED')";
     $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "iissss", $patient_id, $doctor_id, $appointment_date, $appointment_time, $appointment_type, $reason);
+    $reason_db = $reason !== '' ? $reason : null;
+    mysqli_stmt_bind_param($stmt, "iissss", $patient_id, $doctor_id, $appointment_date, $appointment_time, $appointment_type, $reason_db);
 
     if (mysqli_stmt_execute($stmt)) {
         return true;
@@ -2111,16 +2177,18 @@ function handleChangePassword($conn, $user_id) {
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Height (cm)</label>
-                            <input type="number" step="0.1" name="child_height" 
-                                class="w-full px-3 py-2 md:px-4 md:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm md:text-base">
+                            <input type="number" step="0.1" min="10" max="250" name="child_height" inputmode="decimal"
+                                class="w-full px-3 py-2 md:px-4 md:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm md:text-base"
+                                placeholder="e.g., 120.5">
                         </div>
                     </div>
                     
                     <div class="form-grid">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Weight (kg)</label>
-                            <input type="number" step="0.1" name="child_weight" 
-                                class="w-full px-3 py-2 md:px-4 md:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm md:text-base">
+                            <input type="number" step="0.1" min="0.5" max="300" name="child_weight" inputmode="decimal"
+                                class="w-full px-3 py-2 md:px-4 md:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm md:text-base"
+                                placeholder="e.g., 25.5">
                         </div>
                     </div>
                     

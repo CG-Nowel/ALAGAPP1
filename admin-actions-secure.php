@@ -337,12 +337,21 @@ function handleDeleteSchedule($conn) {
 }
 
 function handleAddService($conn) {
-    $required = ['name', 'duration', 'cost'];
+    $required = ['name', 'description', 'duration', 'cost'];
     foreach ($required as $field) {
-        if (empty($_POST[$field])) {
+        if (!isset($_POST[$field]) || trim((string)$_POST[$field]) === '') {
             echo json_encode(['success' => false, 'message' => "Missing required field: $field"]);
             return;
         }
+    }
+    // Strict type validation for numeric fields
+    if (!is_numeric($_POST['duration']) || intval($_POST['duration']) != $_POST['duration']) {
+        echo json_encode(['success' => false, 'message' => 'Duration must be a whole number']);
+        return;
+    }
+    if (!is_numeric($_POST['cost'])) {
+        echo json_encode(['success' => false, 'message' => 'Cost must be a number']);
+        return;
     }
     
     $name = sanitize_input($_POST['name']);
@@ -387,7 +396,7 @@ function handleAddService($conn) {
     if (mysqli_stmt_execute($stmt)) {
         // Log activity
         $user_id = $_SESSION['user_id'];
-        $details = "Added new service: $name (\$$cost, {$duration}min)";
+        $details = "Added new service: $name (₱$cost, {$duration}min)";
         $ip_address = $_SERVER['REMOTE_ADDR'];
         
         $log_query = "INSERT INTO activity_logs (user_id, action, details, ip_address) VALUES (?, 'CREATE', ?, ?)";

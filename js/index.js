@@ -114,7 +114,7 @@ function handleForgotPassword(event) {
     event.preventDefault();
     var emailInput = document.getElementById('forgotEmail');
     if (!emailInput || !emailInput.value.trim()) {
-        alert('Please enter your email address.');
+        (window.showToast || window.alert)('Please enter your email address.', 'warning');
         return false;
     }
 
@@ -135,14 +135,14 @@ function handleForgotPassword(event) {
     .then(function(response) { return response.json(); })
     .then(function(data) {
         if (data.success) {
-            alert('If an account with that email exists, a password reset link has been sent.');
+            (window.showToast || window.alert)('If an account with that email exists, a password reset link has been sent.', 'success');
             closeForgotPassword();
         } else {
-            alert(data.message || 'If an account with that email exists, a password reset link has been sent.');
+            (window.showToast || window.alert)(data.message || 'If an account with that email exists, a password reset link has been sent.', 'info');
         }
     })
     .catch(function() {
-        alert('If an account with that email exists, a password reset link has been sent.');
+        (window.showToast || window.alert)('If an account with that email exists, a password reset link has been sent.', 'info');
     })
     .finally(function() {
         if (submitBtn) {
@@ -440,7 +440,7 @@ function validateLoginForm() {
     var password = document.getElementById('loginPassword');
 
     if (!email || !password || !email.value || !password.value) {
-        alert('Please fill in all fields');
+        (window.showToast || window.alert)('Please fill in all fields', 'warning');
         return false;
     }
     return true;

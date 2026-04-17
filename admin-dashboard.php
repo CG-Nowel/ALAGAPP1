@@ -1261,8 +1261,8 @@ $activity_logs = get_activity_logs($conn);
             formData.append('slot_duration', document.getElementById('scheduleDuration').value);
             formData.append('max_patients', document.getElementById('scheduleMaxPatients').value);
             formData.append('action', 'add_schedule');
-            
-            fetch('admin-actions-simple.php', {
+            formData.append('csrf_token', '<?php echo $_SESSION['csrf_token'] ?? ''; ?>');
+            fetch('admin-actions-secure.php', {
                 method: 'POST',
                 body: formData
             })
@@ -1293,8 +1293,8 @@ $activity_logs = get_activity_logs($conn);
             formData.append('duration', document.getElementById('serviceDuration').value);
             formData.append('cost', document.getElementById('serviceCost').value);
             formData.append('action', 'add_service');
-            
-            fetch('admin-actions-simple.php', {
+            formData.append('csrf_token', '<?php echo $_SESSION['csrf_token'] ?? ''; ?>');
+            fetch('admin-actions-secure.php', {
                 method: 'POST',
                 body: formData
             })
@@ -1326,8 +1326,8 @@ $activity_logs = get_activity_logs($conn);
             formData.append('clinic_address', document.getElementById('clinic_address').value);
             formData.append('appointment_reminder_hours', document.getElementById('appointment_reminder_hours').value);
             formData.append('action', 'update_clinic_settings');
-            
-            fetch('admin-actions-simple.php', {
+            formData.append('csrf_token', '<?php echo $_SESSION['csrf_token'] ?? ''; ?>');
+            fetch('admin-actions-secure.php', {
                 method: 'POST',
                 body: formData
             })
@@ -1356,8 +1356,8 @@ $activity_logs = get_activity_logs($conn);
             const formData = new FormData();
             formData.append('user_id', userId);
             formData.append('action', 'toggle_user_status');
-            
-            fetch('admin-actions-simple.php', {
+            formData.append('csrf_token', '<?php echo $_SESSION['csrf_token'] ?? ''; ?>');
+            fetch('admin-actions-secure.php', {
                 method: 'POST',
                 body: formData
             })
@@ -1398,8 +1398,8 @@ $activity_logs = get_activity_logs($conn);
             const formData = new FormData();
             formData.append('schedule_id', scheduleId);
             formData.append('action', 'delete_schedule');
-            
-            fetch('admin-actions-simple.php', {
+            formData.append('csrf_token', '<?php echo $_SESSION['csrf_token'] ?? ''; ?>');
+            fetch('admin-actions-secure.php', {
                 method: 'POST',
                 body: formData
             })
@@ -1432,8 +1432,8 @@ $activity_logs = get_activity_logs($conn);
             const formData = new FormData();
             formData.append('service_id', serviceId);
             formData.append('action', 'toggle_service_status');
-            
-            fetch('admin-actions-simple.php', {
+            formData.append('csrf_token', '<?php echo $_SESSION['csrf_token'] ?? ''; ?>');
+            fetch('admin-actions-secure.php', {
                 method: 'POST',
                 body: formData
             })
