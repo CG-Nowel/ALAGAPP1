@@ -130,7 +130,7 @@
                 e.target.prepend(alert);
             }
         } catch (err) {
-            alert('Network error');
+            (window.showToast || window.alert)('Network error', 'error');
         } finally {
             btn.disabled = false; spinner.classList.add('d-none');
         }

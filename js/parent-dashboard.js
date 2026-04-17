@@ -208,7 +208,7 @@ function displayAppointmentsList(appointments) {
 
 function handleDateSelect(date) {
     if (!currentDoctorId) {
-        alert('Please select a doctor first');
+        (window.showToast || window.alert)('Please select a doctor first', 'warning');
         return;
     }
 
@@ -283,13 +283,13 @@ function updateTimeOptionsForDate(date, doctorId) {
                 var available = Array.from(timeSelect.options).some(function(o) { return o.value && !o.disabled; });
                 if (!available) {
                     setTimeout(function() {
-                        alert('No available times on this date for the selected doctor. Please choose another date or doctor.');
+                        (window.showToast || window.alert)('No available times on this date for the selected doctor. Please choose another date or doctor.', 'warning');
                     }, 10);
                 }
             } else {
                 timeSelect.innerHTML = '<option value="">No available times</option>';
                 setTimeout(function() {
-                    alert('No available times on this date for the selected doctor. Please choose another date or doctor.');
+                    (window.showToast || window.alert)('No available times on this date for the selected doctor. Please choose another date or doctor.', 'warning');
                 }, 10);
             }
         })
